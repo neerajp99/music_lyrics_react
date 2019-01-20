@@ -13,7 +13,7 @@ class App extends Component {
         <div className="App">
           <Route exact path="/" render={() => <Header />} />
           <Route exact path="/" render={() => <Tracks />} />
-          <Route exact path="/lyrics/:id" render={() => <Lyrics />} />
+          <Route exact path="/lyrics/:id"  render={props => <Lyrics {...props} isAuthed={true} />} />
         </div>
       </MyProvider>
     );
