@@ -16,7 +16,10 @@ class MyProvider extends Component {
         }`
       )
       .then(result => {
-        console.log(result.data);
+        this.setState({
+          tracks_list: result.data.message.body.track_list
+        });
+        console.log(this.state.tracks_list);
       })
       .catch(error => {
         console.log(error);
@@ -26,9 +29,9 @@ class MyProvider extends Component {
   render() {
     return (
       <MyContext.Provider
-        value={{
-          state: this.state
-        }}
+        value={
+           this.state
+        }
       >
         {this.props.children}
       </MyContext.Provider>
