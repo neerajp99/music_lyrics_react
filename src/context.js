@@ -2,11 +2,24 @@ import React, { Component } from "react";
 import axios from "axios";
 
 const MyContext = React.createContext();
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SEARCH_TRACKS":
+      return {
+        ...state,
+        tracks_list: action.payload,
+        heading: "Search Results"
+      };
+    default:
+      return state;
+  }
+};
 
 class MyProvider extends Component {
   state = {
     tracks_list: [],
-    heading: 'Top 20 tracks'
+    heading: "Top 20 tracks",
+    dispatch: action => this.setState(state => reducer(state, action))
   };
 
   componentDidMount = () => {
@@ -29,11 +42,7 @@ class MyProvider extends Component {
 
   render() {
     return (
-      <MyContext.Provider
-        value={
-           this.state
-        }
-      >
+      <MyContext.Provider value={this.state}>
         {this.props.children}
       </MyContext.Provider>
     );
