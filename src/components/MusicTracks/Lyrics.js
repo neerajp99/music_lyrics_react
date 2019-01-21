@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import Spinner from '../Spinner';
+import { Link } from "react-router-dom";
+import Spinner from "../Spinner";
+import Moment from "react-moment";
 
 class Lyrics extends Component {
   state = {
@@ -29,7 +30,7 @@ class Lyrics extends Component {
       })
       .then(res => {
         console.log(res.data);
-         this.setState({
+        this.setState({
           track: res.data.message.body.track
         });
       })
@@ -38,22 +39,38 @@ class Lyrics extends Component {
       });
   };
   render() {
-
     const { track, lyrics } = this.state;
+    const dateToFormat = "1976-04-19T12:59-0500";
 
-    if(track === undefined || lyrics === undefined || Object.keys(track).length === 0 || Object.keys(lyrics).length === 0) {
-      return <Spinner />
-    }
-    else {
+    if (
+      track === undefined ||
+      lyrics === undefined ||
+      Object.keys(track).length === 0 ||
+      Object.keys(lyrics).length === 0
+    ) {
+      return <Spinner />;
+    } else {
       return (
-      <React.Fragment>
-        <p> Here goes the data</p>
-      </React.Fragment>
-      )
+        <React.Fragment>
+          <Link to="/" className="btn btn-light lyrics_back_button mb-4">
+            Go back
+          </Link>
+          <div className="lyrics_show_lyrics">
+            <div className="lyrics_show_lyrics_box md4">
+              <p className="lyrics_show_lyrics_box_para">
+                {lyrics.lyrics_body}
+              </p>
+              <pre className="lyrics_show_lyrics_box_pre card">
+                {track.track_name} by {track.artist_name}
+              </pre>
+              <span className="lyrics_show_lyrics_box_span">
+                Last Updated: <Moment>{track.updated_time}</Moment>
+              </span>
+            </div>
+          </div>
+        </React.Fragment>
+      );
     }
-
-
-
   }
 }
 
